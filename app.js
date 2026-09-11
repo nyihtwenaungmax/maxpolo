@@ -66,9 +66,10 @@ form.addEventListener('submit', async (e) => {
       body: JSON.stringify({ message: text })
     });
 
-    if (!res.ok) throw new Error(`Request failed (${res.status})`);
-
+    
     const data = await res.json();
+    if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+    
     thinkingEl.remove();
     addMessage('bot', data.reply || "I didn't get a response. Please try again.");
   } catch (err) {
